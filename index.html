@@ -770,11 +770,10 @@
                 </a>
 
                 <div class="pt-2">
-                    <label class="block text-xs sm:text-sm font-bold text-gray-600 mb-2">أدخل كود التحقق المكون من 4 أرقام الموضح أدناه:</label>
+                    <label class="block text-xs sm:text-sm font-bold text-gray-600 mb-2">أدخل كود التحقق المكون من 4 أرقام الموضح في رسالة الواتساب:</label>
                     <div class="flex items-center justify-center space-x-2 space-x-reverse mb-3">
                         <input type="text" id="userAuthOtpInput" maxlength="4" placeholder="••••" class="w-36 text-center bg-gray-50 border-2 border-emerald-600 rounded-xl py-2.5 text-xl font-bold tracking-[0.4em] outline-none focus:bg-white">
                     </div>
-                    <p class="text-xs text-gray-400">كود التفعيل الصادر لحسابك هو: <strong id="generatedOtpBadge" class="text-emerald-600 font-mono text-sm font-black"></strong></p>
                 </div>
 
                 <div class="flex space-x-2 space-x-reverse">
@@ -1430,7 +1429,6 @@
             };
 
             document.getElementById('verifyPhoneDisplay').innerText = phone;
-            document.getElementById('generatedOtpBadge').innerText = generatedAccountOtp;
             document.getElementById('userAuthOtpInput').value = '';
 
             const waMsg = encodeURIComponent(`مرحباً منصة حُوشنا 👋، أود توثيق حسابي بصفة (${userRole}) باسم: ${name}. كود التفعيل الخاص بي هو: ${generatedAccountOtp}`);
