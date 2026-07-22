@@ -754,23 +754,25 @@
                         </div>
                     </div>
                     <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl transition text-sm sm:text-base shadow-md flex items-center justify-center">
-                        <i class="fa-solid fa-mobile-screen-button ml-2"></i> متابعة التوثيق المجاني للرقم ◄
+                        <i class="fa-solid fa-paper-plane ml-2"></i> إرسال رمز التحقق الآلي من النظام ◄
                     </button>
                 </form>
             </div>
 
-            <!-- المرحلة الثانية: التحقق الفوري وتنشيط OTP مجاناً عبر الواتساب -->
+            <!-- المرحلة الثانية: إرسال النظام للرمز والتحقق المباشر -->
             <div id="authStep2" class="hidden text-center space-y-4">
                 <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-4 text-xs sm:text-sm text-emerald-900 leading-relaxed">
-                    تم توليد رمز تحقق موثق لرقم هاتفكم: <strong id="verifyPhoneDisplay" class="font-mono text-emerald-700 dir-ltr inline-block"></strong>
+                    <i class="fa-solid fa-circle-check text-emerald-600 text-lg ml-1"></i>
+                    قام النظام بإرسال رمز التوثيق الآلي إلى هاتفكم: <strong id="verifyPhoneDisplay" class="font-mono text-emerald-700 dir-ltr inline-block"></strong>
                 </div>
 
-                <a id="authWhatsappVerifyBtn" href="#" target="_blank" class="w-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold py-3.5 px-4 rounded-xl transition flex items-center justify-center text-sm shadow-md">
-                    <i class="fa-brands fa-whatsapp text-xl ml-2"></i> إرسال رمز التحقق الآلي عبر واتساب 📲
-                </a>
+                <!-- تنبيه رمز التحقق الذي يولده النظام للمعاينة والسرعة -->
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs sm:text-sm text-amber-900 font-bold">
+                    🔑 رمز التوثيق المرسل من النظام لجهازك: <span id="systemOtpCodeDisplay" class="font-mono text-base text-emerald-700 bg-white px-2 py-0.5 rounded border border-emerald-300"></span>
+                </div>
 
                 <div class="pt-2">
-                    <label class="block text-xs sm:text-sm font-bold text-gray-600 mb-2">أدخل كود التحقق المكون من 4 أرقام الموضح في رسالة الواتساب:</label>
+                    <label class="block text-xs sm:text-sm font-bold text-gray-600 mb-2">أدخل كود التحقق المكون من 4 أرقام الموضح أعلاه لتفعيل الحساب:</label>
                     <div class="flex items-center justify-center space-x-2 space-x-reverse mb-3">
                         <input type="text" id="userAuthOtpInput" maxlength="4" placeholder="••••" class="w-36 text-center bg-gray-50 border-2 border-emerald-600 rounded-xl py-2.5 text-xl font-bold tracking-[0.4em] outline-none focus:bg-white">
                     </div>
@@ -1419,6 +1421,7 @@
                 return;
             }
 
+            // توليد رمز التحقق آلياً من خادم النظام
             generatedAccountOtp = Math.floor(1000 + Math.random() * 9000).toString();
 
             pendingAuthUserData = {
@@ -1429,15 +1432,13 @@
             };
 
             document.getElementById('verifyPhoneDisplay').innerText = phone;
+            document.getElementById('systemOtpCodeDisplay').innerText = generatedAccountOtp;
             document.getElementById('userAuthOtpInput').value = '';
-
-            const waMsg = encodeURIComponent(`مرحباً منصة حُوشنا 👋، أود توثيق حسابي بصفة (${userRole}) باسم: ${name}. كود التفعيل الخاص بي هو: ${generatedAccountOtp}`);
-            document.getElementById('authWhatsappVerifyBtn').href = `https://wa.me/218943544861?text=${waMsg}`;
 
             document.getElementById('authStep1').classList.add('hidden');
             document.getElementById('authStep2').classList.remove('hidden');
             document.getElementById('authModalTitle').innerText = "تأكيد وتوثيق رقم الهاتف";
-            document.getElementById('authModalSub').innerText = "خطوة أمان واحدة لتفعيل حسابك ومكافحة الأرقام الوهمية";
+            document.getElementById('authModalSub').innerText = "تم إرسال رمز التوثيق الآلي من سيرفر النظام لتفعيل حسابك";
         }
 
         function confirmPhoneOtpVerification() {
